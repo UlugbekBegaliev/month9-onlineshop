@@ -26,5 +26,5 @@ public class Customer {
     private String password;
 
     @Column(length = 128)
-    private String fullName;
+    private String fullname;
 }

@@ -1,4 +1,4 @@
-`use onlineshop`
+`use onlineshop`;
 
 CREATE TABLE `products` (
     `id` INT auto_increment NOT NULL,

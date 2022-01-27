@@ -9,13 +9,13 @@ import lombok.Data;
 public class CustomerDTO {
 
     private int id;
-    private String fullName;
+    private String fullname;
     private String email;
 
     public static CustomerDTO from(Customer user){
         return builder()
                 .id(user.getId())
-                .fullName(user.getFullName())
+                .fullname(user.getFullname())
                 .email(user.getEmail())
                 .build();
     }

@@ -1,4 +1,5 @@
 use `onlineshop`;
+
     CREATE TABLE `product_types` (
     `id` INT auto_increment NOT NULL,
     `name` VARCHAR(128) NOT NULL,
