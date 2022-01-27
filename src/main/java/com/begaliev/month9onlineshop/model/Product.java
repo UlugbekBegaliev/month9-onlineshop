@@ -33,4 +33,8 @@ public class Product {
     @NotNull
     @Column(length = 128)
     private float price;
+
+    @ManyToOne
+    @JoinColumn(name = "productType_id")
+    private ProductType productType;
 }
