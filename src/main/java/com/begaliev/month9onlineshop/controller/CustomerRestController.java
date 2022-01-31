@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/customers")
-public class CustomerController {
+public class CustomerRestController {
 
     private final CustomerService customerService;
 
