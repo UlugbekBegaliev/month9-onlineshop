@@ -5,6 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 
 @Data
 @Entity
@@ -18,18 +20,26 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotBlank
+    @Size(min = 1, max = 128)
     @Column(length = 128)
     private String name;
 
+    @NotBlank
+    @Size(min = 1, max = 128)
     @Column(length = 300)
     private String description;
 
+    @NotBlank
+    @Size(min = 1, max = 128)
     @Column(length = 128)
     private String image;
 
+    @PositiveOrZero
     @Column(length = 128)
     private int quantity;
 
+    @PositiveOrZero
     @NotNull
     @Column(length = 128)
     private float price;
