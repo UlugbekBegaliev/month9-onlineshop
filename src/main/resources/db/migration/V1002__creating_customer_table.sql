@@ -18,5 +18,5 @@ CREATE TABLE `baskets` (
     `price` FLOAT NOT NULL,
     `customer_id` INT NOT NULL,
     FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
-    PRIMARY KEY (`id`)
+    PRIMARY
 )
