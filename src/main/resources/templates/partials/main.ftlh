@@ -1,4 +1,4 @@
-<#macro renderWith title="month9-onlineshop" scripts=[] styles=[]>
+<#macro renderWith title="Test" scripts=[] styles=[]>
     <!doctype html>
     <html lang="en">
     <head>
@@ -17,7 +17,7 @@
     <body>
 
     <div class="container">
-        <h1>Lesson 68. Spring Security for MVC</h1>
+        <h1>Test</h1>
         <#nested>
 
     </div>
