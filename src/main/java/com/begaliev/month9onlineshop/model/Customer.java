@@ -35,6 +35,10 @@ public class Customer {
     @Column(length = 128)
     private String fullname;
 
+    @Column
+    @Builder.Default
+    private boolean enabled = true;
+
     @NotBlank
     @Builder.Default
     @Size(min = 1, max = 128)
