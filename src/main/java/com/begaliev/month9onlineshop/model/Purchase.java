@@ -1,9 +1,6 @@
 package com.begaliev.month9onlineshop.model;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -16,6 +13,7 @@ import javax.validation.constraints.Size;
 @Entity
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor
+@Builder
 public class Purchase {
 
     @Id
@@ -23,7 +21,7 @@ public class Purchase {
     private Integer id;
 
     @ManyToOne
-    @Column(length = 128)
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     @Size(min = 1, max = 128)
