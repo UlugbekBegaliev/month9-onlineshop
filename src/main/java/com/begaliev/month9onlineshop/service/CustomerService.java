@@ -1,6 +1,7 @@
 package com.begaliev.month9onlineshop.service;
 
 import com.begaliev.month9onlineshop.dto.CustomerDTO;
+import com.begaliev.month9onlineshop.model.CustomerRegisterForm;
 import com.begaliev.month9onlineshop.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,5 +16,9 @@ public class CustomerService {
 
     public Page<CustomerDTO> getAll(Pageable pageable){
         return customerRepository.findAll(pageable).map(CustomerDTO::from);
+    }
+
+    public CustomerDTO register(CustomerRegisterForm form) {
+        return CustomerDTO.from();
     }
 }
