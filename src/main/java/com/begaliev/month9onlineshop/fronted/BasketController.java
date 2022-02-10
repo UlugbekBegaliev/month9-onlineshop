@@ -10,7 +10,7 @@ import com.begaliev.month9onlineshop.service.ProductService;
 import com.begaliev.month9onlineshop.service.PurchaseService;
 import org.springframework.http.MediaType;
 import lombok.AllArgsConstructor;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

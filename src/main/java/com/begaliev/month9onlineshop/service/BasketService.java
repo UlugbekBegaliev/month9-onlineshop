@@ -10,7 +10,7 @@ import com.begaliev.month9onlineshop.repository.BasketRepository;
 import com.begaliev.month9onlineshop.repository.CustomerRepository;
 import com.begaliev.month9onlineshop.repository.ProductRepository;
 import lombok.AllArgsConstructor;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,7 +32,7 @@ public class BasketService {
 
     public void addToBasket(ProductDTO productDTO, List<BasketDTO> basketSession, Authentication authentication) {
 
-        Customer customer = customerRepository.findByEmail(authentication.name()).get();
+        Customer customer = customerRepository.findByEmail(authentication.getName()).get();
 
         Product product = productRepository.findById(productDTO.getId())
                 .orElseThrow(ProductNotFoundException::new);
