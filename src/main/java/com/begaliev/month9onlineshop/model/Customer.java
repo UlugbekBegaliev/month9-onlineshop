@@ -44,4 +44,6 @@ public class Customer {
     @Size(min = 1, max = 128)
     @Column(length = 128)
     private String role = "USER";
+
+    private String captcha;
 }

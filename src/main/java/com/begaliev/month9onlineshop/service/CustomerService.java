@@ -43,4 +43,8 @@ public class CustomerService {
 
         return CustomerDTO.from(user);
     }
+
+    public void add(Customer customer) {
+
+    }
 }
