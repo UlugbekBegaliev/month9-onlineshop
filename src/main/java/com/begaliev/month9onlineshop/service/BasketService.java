@@ -1,6 +1,7 @@
 package com.begaliev.month9onlineshop.service;
 
 import com.begaliev.month9onlineshop.dto.BasketDTO;
+import com.begaliev.month9onlineshop.dto.ProductDTO;
 import com.begaliev.month9onlineshop.model.Basket;
 import com.begaliev.month9onlineshop.model.Customer;
 import com.begaliev.month9onlineshop.repository.BasketRepository;
@@ -19,10 +20,12 @@ public class BasketService {
     private final BasketRepository basketRepository;
     private final CustomerRepository customerRepository;
     private final ProductRepository productRepository;
-//
-//    public List<BasketDTO> getBasket(List<BasketDTO> basket, Authentication authentication){
-//        Customer customer = customerRepository.findByEmail(authentication.name().trim());
-//        List<Basket> baskets = basketRepository.findAllByCustomerId(customer.getId());
-//        return basket;
-//    }
+
+    public List<BasketDTO> getBasket(List<BasketDTO> basket, Authentication authentication) {
+        return null;
+    }
+
+    public void addToBasket(ProductDTO productDTO, List<BasketDTO> basket, Authentication authentication) {
+
+    }
 }
