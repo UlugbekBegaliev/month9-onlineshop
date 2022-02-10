@@ -14,6 +14,7 @@ import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -24,7 +25,9 @@ public class BasketService {
     private final ProductRepository productRepository;
 
     public List<BasketDTO> getBasket(List<BasketDTO> basket, Authentication authentication) {
-        return null;
+//        Optional<Customer> customer = customerRepository.findByEmail(authentication.name());
+//        List<Basket> baskets = basketRepository.findAllByCustomerId(customer.get().getId());
+        return basket;
     }
 
     public void addToBasket(ProductDTO productDTO, List<BasketDTO> basketSession, Authentication authentication) {
