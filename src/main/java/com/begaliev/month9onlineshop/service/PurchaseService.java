@@ -1,5 +1,6 @@
 package com.begaliev.month9onlineshop.service;
 
+import com.begaliev.month9onlineshop.dto.BasketDTO;
 import com.begaliev.month9onlineshop.dto.PurchaseDTO;
 import com.begaliev.month9onlineshop.exeption.CustomerNotFoundException;
 import com.begaliev.month9onlineshop.model.Customer;
@@ -26,7 +27,9 @@ public class PurchaseService {
                 .orElseThrow(CustomerNotFoundException::new);
 
         return purchaseRepository.finAllByCustomerId(customer.getId(), pageable).map(PurchaseDTO::from);
-        )
     }
 
+    public void purchase(BasketDTO basketDTO) {
+
+    }
 }

@@ -44,6 +44,15 @@ public class BasketController {
     }
 
     @ResponseBody
+    @PostMapping(path = "/purchase/id", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String purchase(@RequestBody BasketDTO basketDTO){
+
+        purchaseService.purchase(basketDTO);
+
+        return "redirect:/purchases";
+    }
+
+    @ResponseBody
     @PostMapping(path = "/basket/id", consumes = MediaType.APPLICATION_JSON_VALUE)
     public String emptyBasketById(@RequestBody BasketDTO basketDTO){
         basketService.deleteBasket(basketDTO.getId());
