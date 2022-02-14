@@ -1,4 +1,5 @@
 <#import "partials/main.ftlh" as main />
+<#import "/spring.ftl" as spring>
 
 <@main.renderWith>
     <h2>Please sign in</h2>

@@ -9,7 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Builder
-@Table(name = "updates")
+@Table(name = "resets")
 public class PasswordManager {
 
     @Id

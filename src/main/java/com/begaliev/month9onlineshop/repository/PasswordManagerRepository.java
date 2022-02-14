@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PasswordManagerRepository extends JpaRepository<PasswordManager, Integer> {
 
+
+    boolean existsByToken(String token);
 }
