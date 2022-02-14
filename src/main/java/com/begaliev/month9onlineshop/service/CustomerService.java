@@ -11,6 +11,7 @@ import com.begaliev.month9onlineshop.repository.PasswordManagerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -57,5 +58,9 @@ public class CustomerService {
 
     public void resetPassword(String token, String newPassword){
         PasswordManager resetPassword = passwordManagerRepository.findByToken(token).get();
+        Customer customer = customerRepository.findById(resetPassword.getCustomer().getId()).get();
+        customer.setPassword(new BCryptPasswordEncoder().encode(newPassword));
+
+        customerRepository.save(customer);
     }
 }

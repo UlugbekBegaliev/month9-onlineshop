@@ -9,7 +9,6 @@ import java.util.Optional;
 @Repository
 public interface PasswordManagerRepository extends JpaRepository<PasswordManager, Integer> {
 
-
     boolean existsByToken(String token);
 
     Optional<PasswordManager> findByToken(String token);
