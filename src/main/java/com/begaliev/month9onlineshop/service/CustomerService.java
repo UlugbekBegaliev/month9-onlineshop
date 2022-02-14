@@ -5,7 +5,9 @@ import com.begaliev.month9onlineshop.exeption.CustomerAlreadyRegisteredException
 import com.begaliev.month9onlineshop.exeption.CustomerNotFoundException;
 import com.begaliev.month9onlineshop.model.Customer;
 import com.begaliev.month9onlineshop.model.CustomerRegisterForm;
+import com.begaliev.month9onlineshop.model.PasswordManager;
 import com.begaliev.month9onlineshop.repository.CustomerRepository;
+import com.begaliev.month9onlineshop.repository.PasswordManagerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +20,7 @@ public class CustomerService {
 
     private final CustomerRepository customerRepository;
     private final PasswordEncoder encoder;
+    private final PasswordManagerRepository passwordManagerRepository;
 
     public Page<CustomerDTO> getAll(Pageable pageable){
         return customerRepository.findAll(pageable).map(CustomerDTO::from);
@@ -44,7 +47,15 @@ public class CustomerService {
         return CustomerDTO.from(user);
     }
 
-    public void add(Customer customer) {
+    public boolean existsByEmail(String email){
+        return customerRepository.existsByEmail(email);
+    }
 
+    public void add(Customer customer) {
+        customerRepository.findByEmail(customer.getEmail());
+    }
+
+    public void resetPassword(String token, String newPassword){
+        PasswordManager resetPassword = passwordManagerRepository.findByToken(token).get();
     }
 }
