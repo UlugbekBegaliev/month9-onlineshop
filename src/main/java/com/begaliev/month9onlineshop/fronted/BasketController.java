@@ -2,12 +2,14 @@ package com.begaliev.month9onlineshop.fronted;
 
 import com.begaliev.month9onlineshop.dto.BasketDTO;
 import com.begaliev.month9onlineshop.dto.ProductDTO;
+import com.begaliev.month9onlineshop.dto.ReviewDTO;
 import com.begaliev.month9onlineshop.model.Basket;
 import com.begaliev.month9onlineshop.model.Constants;
 import com.begaliev.month9onlineshop.repository.BasketRepository;
 import com.begaliev.month9onlineshop.service.BasketService;
 import com.begaliev.month9onlineshop.service.ProductService;
 import com.begaliev.month9onlineshop.service.PurchaseService;
+import com.begaliev.month9onlineshop.service.ReviewService;
 import org.springframework.http.MediaType;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -25,6 +27,32 @@ public class BasketController {
     private final BasketService basketService;
     private final ProductService productService;
     private final PurchaseService purchaseService;
+    private final ReviewService reviewService;
+
+    @GetMapping("/products/{id}/reviews")
+    public String reviews(@PathVariable String id, Model model){
+        List<ReviewDTO> reviewDTOS = reviewService
+                .getReviewsByProductId(Integer.parseInt(id));
+
+        if (!reviewDTOS.isEmpty()){
+            model.addAttribute("items", reviewDTOS);
+        }
+
+        ProductDTO product = productService.getById(Integer.parseInt(id));
+        model.addAttribute("product", product);
+
+        return "review";
+    }
+
+    @PostMapping("/reviews/{id}")
+    public String review(@PathVariable String id,
+                         @RequestParam String description,
+                         Authentication authentication){
+
+        reviewService.review(Integer.parseInt(id), description, authentication);
+
+        return "redirect:/products/{id}/reviews";
+    }
 
     @GetMapping("/basket")
     public String basket(Model model, @SessionAttribute(name = Constants.BASKET_ID, required = false) List<BasketDTO> basket,

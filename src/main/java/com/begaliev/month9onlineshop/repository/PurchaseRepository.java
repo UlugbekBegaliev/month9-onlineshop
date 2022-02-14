@@ -11,4 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface PurchaseRepository extends JpaRepository<Purchase, Integer> {
 
     Page<Purchase> finAllByCustomerId(Integer id, Pageable pageable);
+
+    boolean existsByCustomerId(Integer id);
 }
