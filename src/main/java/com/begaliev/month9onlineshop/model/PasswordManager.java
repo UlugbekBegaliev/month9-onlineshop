@@ -17,4 +17,8 @@ public class PasswordManager {
     private Integer id;
 
     private String token;
+
+    @OneToOne(targetEntity = Customer.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 }
