@@ -12,4 +12,6 @@ public interface PasswordManagerRepository extends JpaRepository<PasswordManager
     boolean existsByToken(String token);
 
     Optional<PasswordManager> findByToken(String token);
+
+    void deleteAll();
 }
