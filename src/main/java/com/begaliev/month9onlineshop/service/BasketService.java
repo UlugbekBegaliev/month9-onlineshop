@@ -2,6 +2,7 @@ package com.begaliev.month9onlineshop.service;
 
 import com.begaliev.month9onlineshop.dto.BasketDTO;
 import com.begaliev.month9onlineshop.dto.ProductDTO;
+import com.begaliev.month9onlineshop.exeption.CustomerNotFoundException;
 import com.begaliev.month9onlineshop.exeption.ProductNotFoundException;
 import com.begaliev.month9onlineshop.model.Basket;
 import com.begaliev.month9onlineshop.model.Customer;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -25,8 +27,16 @@ public class BasketService {
     private final ProductRepository productRepository;
 
     public List<BasketDTO> getBasket(List<BasketDTO> basket, Authentication authentication) {
-//        Optional<Customer> customer = customerRepository.findByEmail(authentication.name());
-//        List<Basket> baskets = basketRepository.findAllByCustomerId(customer.get().getId());
+
+        if(basketRepository.count() != basket.size()){
+            basket.clear();
+            Customer customer = customerRepository.findByEmail(authentication.getName()).orElseThrow(CustomerNotFoundException::new);
+            List<Basket> baskets = basketRepository.findAllByCustomerId(customer.getId());
+            List<BasketDTO> basketDTOS = baskets.stream().map(BasketDTO::from).collect(Collectors.toList());
+            basket.addAll(basketDTOS);
+
+            return basket;
+        }
         return basket;
     }
 
