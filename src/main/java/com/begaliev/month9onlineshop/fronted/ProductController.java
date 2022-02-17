@@ -31,9 +31,49 @@ public class ProductController {
         return "index";
     }
 
+    @GetMapping("/audies")
+    public String getAudies(Model model, Pageable pageable, HttpServletRequest uriBuilder) {
+        model.addAttribute("product", "Audi");
+        var products = productService.getAllByTypeId(1, pageable);
+        var uri = uriBuilder.getRequestURI();
+        PropertiesService.constructPageable(products, propertiesService.getDefaultPageSize(), model, uri);
+
+        return "product";
+    }
+
+    @GetMapping("/bmwes")
+    public String getBmwes(Model model, Pageable pageable, HttpServletRequest uriBuilder) {
+        model.addAttribute("product", "BMW");
+        var products = productService.getAllByTypeId(2, pageable);
+        var uri = uriBuilder.getRequestURI();
+        PropertiesService.constructPageable(products, propertiesService.getDefaultPageSize(), model, uri);
+
+        return "product";
+    }
+
+    @GetMapping("/mercedeses")
+    public String getMercedeses(Model model, Pageable pageable, HttpServletRequest uriBuilder) {
+        model.addAttribute("product", "Mercedes");
+        var products = productService.getAllByTypeId(3, pageable);
+        var uri = uriBuilder.getRequestURI();
+        PropertiesService.constructPageable(products, propertiesService.getDefaultPageSize(), model, uri);
+
+        return "product";
+    }
+
+    @GetMapping("/toyotas")
+    public String getToyotas(Model model, Pageable pageable, HttpServletRequest uriBuilder) {
+        model.addAttribute("product", "Toyota");
+        var products = productService.getAllByTypeId(4, pageable);
+        var uri = uriBuilder.getRequestURI();
+        PropertiesService.constructPageable(products, propertiesService.getDefaultPageSize(), model, uri);
+
+        return "product";
+    }
+
     @ExceptionHandler({ResourceNotFoundException.class})
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    private String handleRNF(ResourceNotFoundException ex, Model model){
+    private String handleRNF(ResourceNotFoundException ex, Model model) {
 
         model.addAttribute("resource", ex);
         model.addAttribute("id", ex.getId());
