@@ -7,10 +7,8 @@ import com.begaliev.month9onlineshop.exeption.ResourceNotFoundException;
 import com.begaliev.month9onlineshop.model.Basket;
 import com.begaliev.month9onlineshop.model.Constants;
 import com.begaliev.month9onlineshop.repository.BasketRepository;
-import com.begaliev.month9onlineshop.service.BasketService;
-import com.begaliev.month9onlineshop.service.ProductService;
-import com.begaliev.month9onlineshop.service.PurchaseService;
-import com.begaliev.month9onlineshop.service.ReviewService;
+import com.begaliev.month9onlineshop.service.*;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import lombok.AllArgsConstructor;
@@ -19,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -30,6 +29,7 @@ public class BasketController {
     private final ProductService productService;
     private final PurchaseService purchaseService;
     private final ReviewService reviewService;
+    private final PropertiesService propertiesService;
 
     @GetMapping("/products/{id}/reviews")
     public String reviews(@PathVariable String id, Model model) {
@@ -65,12 +65,25 @@ public class BasketController {
         return "basket";
     }
 
+    @PostMapping(path = "/basket", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
     public boolean addToBasket(@RequestBody ProductDTO productDTO,
                                @SessionAttribute(name = Constants.BASKET_ID, required = false)
                                        List<BasketDTO> basket, Authentication authentication) {
         basketService.addToBasket(productDTO, basket, authentication);
 
         return true;
+    }
+
+    @GetMapping("/purchases")
+    public String purchases(Model model, Authentication authentication, Pageable pageable, HttpServletRequest uriBuilder) {
+
+        var purchases = purchaseService.getPurchases(authentication, pageable);
+        var uri = uriBuilder.getRequestURI();
+        propertiesService.setDefaultPageSize(10);
+        PropertiesService.constructPageable(purchases, propertiesService.getDefaultPageSize(), model, uri);
+
+        return "purchase";
     }
 
     @ResponseBody

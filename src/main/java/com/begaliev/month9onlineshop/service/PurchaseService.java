@@ -3,7 +3,10 @@ package com.begaliev.month9onlineshop.service;
 import com.begaliev.month9onlineshop.dto.BasketDTO;
 import com.begaliev.month9onlineshop.dto.PurchaseDTO;
 import com.begaliev.month9onlineshop.exeption.CustomerNotFoundException;
+import com.begaliev.month9onlineshop.exeption.ProductNotFoundException;
+import com.begaliev.month9onlineshop.model.Basket;
 import com.begaliev.month9onlineshop.model.Customer;
+import com.begaliev.month9onlineshop.model.Purchase;
 import com.begaliev.month9onlineshop.repository.BasketRepository;
 import com.begaliev.month9onlineshop.repository.CustomerRepository;
 import com.begaliev.month9onlineshop.repository.PurchaseRepository;
@@ -21,7 +24,7 @@ public class PurchaseService {
     private final CustomerRepository customerRepository;
     private final BasketRepository basketRepository;
 
-    public Page<PurchaseDTO> getPurchases(Pageable pageable, Authentication authentication) {
+    public Page<PurchaseDTO> getPurchases(Authentication authentication, Pageable pageable) {
 
         Customer customer = customerRepository.findByEmail(authentication.getName())
                 .orElseThrow(CustomerNotFoundException::new);
@@ -30,6 +33,16 @@ public class PurchaseService {
     }
 
     public void purchase(BasketDTO basketDTO) {
+        Basket basket = basketRepository.findById(basketDTO.getId()).orElseThrow(ProductNotFoundException::new);
 
+        Purchase purchase = Purchase.builder()
+                .customer(basket.getCustomer())
+                .price(basket.getPrice())
+                .productName(basket.getProductName())
+                .quantity(basket.getQuantity())
+                .build();
+
+        purchaseRepository.save(purchase);
+        basketRepository.deleteById(basketDTO.getId());
     }
 }
