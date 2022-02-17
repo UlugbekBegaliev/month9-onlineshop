@@ -22,4 +22,6 @@
         </#list>
     </div>
 
+    <#include "pagination.ftlh">
+
 </@main.renderWith>

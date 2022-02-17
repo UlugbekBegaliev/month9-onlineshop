@@ -26,7 +26,10 @@
 </tbody>
 </#list>
 </table>
-
+<#else>
+    <p><@spring.message "table.empty" /></p>
+</#if>
+    <#include "pagination.ftlh">
 <div>
     <a href="/"><@spring.message "link.back" /></a>
 </div>
