@@ -2,8 +2,11 @@
 <#import "/spring.ftl" as spring>
 
 <@main.renderWith>
-    <h2>Please sign in</h2>
-    <form action="/login" method="post">
+<#--<@main.renderWith scripts=["js/login.js"]>-->
+
+    <div class="mx-auto mt-3 w-50">
+        <form id="login-form" action="/login" method="post">
+<#--    <form id="login-form">-->
 
         <div>
             <#if error!false >
@@ -15,23 +18,15 @@
             <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
         </#if>
 
-        <div>
-            <label class="flex flex-v-center ">
-                <span class="label-input-text">Адрес почты:</span>
-                <input type="text" name="username" placeholder="ваш адрес почты"  value="${(dto.email)!''}" autofocus >
-            </label>
+        <h3><@spring.message "nav.login" /></h3>
+        <input type="email" name="username" class="form-control mb-1" value="${(dto.email)!''}" placeholder="<@spring.message "form.input.email" />" autofocus>
+        <input type="password" name="password" class="form-control mb-1" placeholder="<@spring.message "form.input.password" />">
+        <button class="btn btn-outline-primary btn-block"><@spring.message "nav.login" /></button>
+
+        </form>
+        <div class="bottom-box">
+            <a href="/forgot-password"><@spring.message "link.restore_password" /></a>
+            <a href="/"><@spring.message "link.back" /></a>
         </div>
-        <div>
-            <label class="flex flex-v-center label-input-text">
-                <span class="label-input-text">Пароль:</span>
-                <input type="text" name="password" placeholder="пароль" value="">
-            </label>
-        </div>
-        <div>
-            <button type="submit">Войти!</button>
-        </div>
-    </form>
-    <div class="bottom-box">
-        <a href="/">На главную страницу</a>
     </div>
 </@main.renderWith>

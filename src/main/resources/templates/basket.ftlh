@@ -13,6 +13,8 @@
                     <th scope="col"><@spring.message "col.name" /></th>
                     <th scope="col"><@spring.message "col.quantity" /></th>
                     <th scope="col"><@spring.message "col.price" /></th>
+                    <th scope="col"><@spring.message "col.delete" /></th>
+                    <th scope="col"><@spring.message "col.buy" /></th>
                 </tr>
                 </thead>
         <#list basketItems as item>
@@ -22,10 +24,27 @@
                     <td>${item.productName}</td>
                     <td>${item.quantity}</td>
                     <td>${item.price}$</td>
+                    <td><a href="#" class="delete btn btn-danger">
+                            <@spring.message "col.delete" />
+                        </a></td>
+                    <td><a href="#" class="buy btn btn-primary">
+                            <@spring.message "col.buy" />
+                        </a></td>
                 </tr>
                 </tbody>
         </#list>
             </table>
+
+<#--        <form action="/basket/empty" method="post">-->
+<#--            <#if _csrf??>-->
+<#--                <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>-->
+<#--            </#if>-->
+<#--            <button>Очистить корзину</button>-->
+<#--        </form>-->
+
+    <#else>
+        <p><@spring.message "table.empty" /></p>
+    </#if>
 
     <div>
         <a href="/"><@spring.message "link.back" /></a>

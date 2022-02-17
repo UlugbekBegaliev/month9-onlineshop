@@ -15,16 +15,20 @@
         <th scope="col"><@spring.message "col.price" /></th>
     </tr>
     </thead>
-    <#list items as item>
-    <tbody>
+<#list items as item>
+<tbody>
     <tr id="${item.id}">
         <th scope="row">${item?counter}</th>
         <td>${item.productName}</td>
         <td>${item.quantity}</td>
         <td>${item.price}$</td>
     </tr>
-    </tbody>
+</tbody>
 </#list>
 </table>
+
+<div>
+    <a href="/"><@spring.message "link.back" /></a>
+</div>
 
 </@main.renderWith>
