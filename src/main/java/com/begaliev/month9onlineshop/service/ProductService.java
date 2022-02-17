@@ -13,15 +13,20 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public Page<ProductDTO> getAll(Pageable pageable){
+    public Page<ProductDTO> getAll(Pageable pageable) {
         return productRepository.findAll(pageable).map(ProductDTO::from);
     }
 
-    public ProductDTO getById(Integer id){
+    public ProductDTO getById(Integer id) {
         return ProductDTO.from(productRepository.findById(id).get());
     }
 
-    public Page<ProductDTO> getAllByTypeId(int id, Pageable pageable){
+    public Page<ProductDTO> getAllByTypeId(int id, Pageable pageable) {
         return productRepository.findAllByTypeId(id, pageable).map(ProductDTO::from);
+    }
+
+    public Page<ProductDTO> search(String name, String description, Pageable pageable) {
+        return productRepository.findAllByNameContainingOrDescriptionContaining(name, description, pageable)
+                .map(ProductDTO::from);
     }
 }
