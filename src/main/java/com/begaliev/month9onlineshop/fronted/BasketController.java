@@ -3,6 +3,7 @@ package com.begaliev.month9onlineshop.fronted;
 import com.begaliev.month9onlineshop.dto.BasketDTO;
 import com.begaliev.month9onlineshop.dto.ProductDTO;
 import com.begaliev.month9onlineshop.dto.ReviewDTO;
+import com.begaliev.month9onlineshop.exeption.ResourceNotFoundException;
 import com.begaliev.month9onlineshop.model.Basket;
 import com.begaliev.month9onlineshop.model.Constants;
 import com.begaliev.month9onlineshop.repository.BasketRepository;
@@ -10,6 +11,7 @@ import com.begaliev.month9onlineshop.service.BasketService;
 import com.begaliev.month9onlineshop.service.ProductService;
 import com.begaliev.month9onlineshop.service.PurchaseService;
 import com.begaliev.month9onlineshop.service.ReviewService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -30,11 +32,11 @@ public class BasketController {
     private final ReviewService reviewService;
 
     @GetMapping("/products/{id}/reviews")
-    public String reviews(@PathVariable String id, Model model){
+    public String reviews(@PathVariable String id, Model model) {
         List<ReviewDTO> reviewDTOS = reviewService
                 .getReviewsByProductId(Integer.parseInt(id));
 
-        if (!reviewDTOS.isEmpty()){
+        if (!reviewDTOS.isEmpty()) {
             model.addAttribute("items", reviewDTOS);
         }
 
@@ -47,7 +49,7 @@ public class BasketController {
     @PostMapping("/reviews/{id}")
     public String review(@PathVariable String id,
                          @RequestParam String description,
-                         Authentication authentication){
+                         Authentication authentication) {
 
         reviewService.review(Integer.parseInt(id), description, authentication);
 
@@ -73,7 +75,7 @@ public class BasketController {
 
     @ResponseBody
     @PostMapping(path = "/purchase/id", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String purchase(@RequestBody BasketDTO basketDTO){
+    public String purchase(@RequestBody BasketDTO basketDTO) {
 
         purchaseService.purchase(basketDTO);
 
@@ -82,17 +84,26 @@ public class BasketController {
 
     @ResponseBody
     @PostMapping(path = "/basket/id", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String emptyBasketById(@RequestBody BasketDTO basketDTO){
+    public String emptyBasketById(@RequestBody BasketDTO basketDTO) {
         basketService.deleteBasket(basketDTO.getId());
 
         return "redirect:/basket";
     }
 
     @PostMapping("/basket/empty")
-    public String emptyBasket(HttpSession httpSession, Authentication authentication){
+    public String emptyBasket(HttpSession httpSession, Authentication authentication) {
         httpSession.removeAttribute(Constants.BASKET_ID);
 
         return "redirect:/basket";
+    }
+
+    @ExceptionHandler({ResourceNotFoundException.class})
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    private String handleRNF(ResourceNotFoundException ex, Model model) {
+
+        model.addAttribute("resource", ex);
+        model.addAttribute("id", ex.getId());
+        return "resource-not-found";
     }
 
 }
